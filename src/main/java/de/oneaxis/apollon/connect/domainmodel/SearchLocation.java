@@ -1,6 +1,6 @@
 package de.oneaxis.apollon.connect.domainmodel;
 
-import de.oneaxis.ddd.shared.ValueObject;
+import de.oneaxis.ddd.sharedkernel.ValueObject;
 
 @ValueObject
 public class SearchLocation {

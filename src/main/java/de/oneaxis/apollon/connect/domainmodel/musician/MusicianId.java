@@ -1,7 +1,7 @@
 package de.oneaxis.apollon.connect.domainmodel.musician;
 
-import de.oneaxis.ddd.shared.AbstractEntityId;
-import de.oneaxis.ddd.shared.ValueObject;
+import de.oneaxis.ddd.sharedkernel.AbstractEntityId;
+import de.oneaxis.ddd.sharedkernel.ValueObject;
 import org.bson.types.ObjectId;
 
 @ValueObject

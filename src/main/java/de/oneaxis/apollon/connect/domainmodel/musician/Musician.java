@@ -3,7 +3,7 @@ package de.oneaxis.apollon.connect.domainmodel.musician;
 import de.oneaxis.apollon.connect.domainmodel.band.BandId;
 import de.oneaxis.apollon.connect.domainmodel.gear.GearId;
 import de.oneaxis.apollon.connect.domainmodel.SearchLocation;
-import de.oneaxis.ddd.shared.AggregateRoot;
+import de.oneaxis.ddd.sharedkernel.AggregateRoot;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package de.oneaxis.apollon.connect.domainmodel.band;
 
 import de.oneaxis.apollon.connect.domainmodel.musician.MusicianId;
-import de.oneaxis.ddd.shared.AggregateRoot;
+import de.oneaxis.ddd.sharedkernel.AggregateRoot;
 
 import java.util.List;
 

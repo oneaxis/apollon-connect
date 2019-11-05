@@ -1,6 +1,6 @@
 package de.oneaxis.apollon.connect.domainmodel.gear;
 
-import de.oneaxis.ddd.shared.Entity;
+import de.oneaxis.ddd.sharedkernel.Entity;
 
 @Entity
 public class Gear {

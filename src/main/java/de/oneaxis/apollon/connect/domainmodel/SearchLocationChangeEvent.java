@@ -1,6 +1,6 @@
 package de.oneaxis.apollon.connect.domainmodel;
 
-import de.oneaxis.ddd.shared.Event;
+import de.oneaxis.ddd.sharedkernel.Event;
 
 @Event
 public class SearchLocationChangeEvent {
