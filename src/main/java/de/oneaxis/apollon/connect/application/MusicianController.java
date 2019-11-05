@@ -12,7 +12,6 @@ import java.util.List;
 @RestController
 @RequestMapping("musicians")
 public class MusicianController {
-
     private final MusicianRepositoryImpl musicianRepository;
 
     public MusicianController(MusicianRepositoryImpl musicianRepository) {
