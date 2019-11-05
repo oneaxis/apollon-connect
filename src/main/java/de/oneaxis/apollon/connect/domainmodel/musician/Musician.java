@@ -10,19 +10,27 @@ import java.util.List;
 @AggregateRoot
 public class Musician {
     public final MusicianId id;
-    private SearchLocation searchLocation;
     public final List<BandId> bands;
     public final List<GearId> gearList;
+    private SearchLocation searchLocation;
 
-    public Musician(MusicianId id, SearchLocation searchLocation, List<BandId> bands, List<GearId> gearList) {
+    Musician(MusicianId id, SearchLocation searchLocation, List<BandId> bands, List<GearId> gearList) {
         this.id = id;
         this.searchLocation = searchLocation;
         this.bands = bands;
         this.gearList = gearList;
     }
 
-    public void changeSearchLocation(SearchLocation searchLocation) {
+    public SearchLocation searchLocation() {
+        return searchLocation;
+    }
+
+    public void stopSearching() {
+        searchLocation = null;
+    }
+
+    public void newSearchLocation(String postalCode, String country) {
         //TODO: dispose search location change event to event handler
-        searchLocation = new SearchLocation(searchLocation.postalCode, searchLocation.country);
+        searchLocation = new SearchLocation(postalCode, country);
     }
 }
