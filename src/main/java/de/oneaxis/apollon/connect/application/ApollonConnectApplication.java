@@ -1,4 +1,4 @@
-package de.oneaxis.apollon.connect;
+package de.oneaxis.apollon.connect.application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
