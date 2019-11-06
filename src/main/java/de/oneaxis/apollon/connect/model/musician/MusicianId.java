@@ -1,12 +1,12 @@
-package de.oneaxis.apollon.connect.domainmodel.band;
+package de.oneaxis.apollon.connect.model.musician;
 
 import de.oneaxis.ddd.sharedkernel.AbstractEntityId;
 import de.oneaxis.ddd.sharedkernel.ValueObject;
 import org.bson.types.ObjectId;
 
 @ValueObject
-public class BandId extends AbstractEntityId {
-    protected BandId(ObjectId value) {
+public class MusicianId extends AbstractEntityId {
+    protected MusicianId(ObjectId value) {
         super(value);
     }
 }
