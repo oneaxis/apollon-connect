@@ -1,6 +1,6 @@
 package de.oneaxis.apollon.connect.model.musician;
 
-import de.oneaxis.apollon.connect.model.SearchLocationAlreadyAssigned;
+import de.oneaxis.apollon.connect.model.SearchLocationAlreadyAssignedException;
 import de.oneaxis.apollon.connect.model.band.BandId;
 import de.oneaxis.apollon.connect.model.gear.GearId;
 import de.oneaxis.apollon.connect.model.SearchLocation;
@@ -30,7 +30,7 @@ public class Musician {
         searchLocations.remove(searchLocation);
     }
 
-    public void addSearchLocation(String postalCode) throws SearchLocationAlreadyAssigned {
-        if (!searchLocations.add(new SearchLocation(postalCode))) throw new SearchLocationAlreadyAssigned();
+    public void addSearchLocation(String postalCode) throws SearchLocationAlreadyAssignedException {
+        if (!searchLocations.add(new SearchLocation(postalCode))) throw new SearchLocationAlreadyAssignedException();
     }
 }

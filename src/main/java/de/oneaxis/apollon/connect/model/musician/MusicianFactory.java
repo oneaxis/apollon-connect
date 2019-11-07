@@ -7,7 +7,7 @@ import java.util.HashSet;
 public class MusicianFactory {
 
     public static Musician createBlank() {
-        MusicianId id = new MusicianId(new ObjectId());
+        MusicianId id = new MusicianId(new ObjectId().toString());
         return new Musician(id, new HashSet<>(), new HashSet<>(), new HashSet<>());
     }
 }

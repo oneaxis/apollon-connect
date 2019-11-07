@@ -1,7 +1,5 @@
 package de.oneaxis.apollon.connect.application.musician;
 
-import de.oneaxis.apollon.connect.model.musician.Musician;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,7 @@ class MusicianControllerTests {
     @Test
     void ShouldCreateBlankMusician() {
         String url = String.format("http://localhost:%s/musicians", randomServerPort);
-        Musician musician = restTemplate.postForObject(url, null, Musician.class);
+        MusicianResponse musician = restTemplate.postForObject(url, null, MusicianResponse.class);
         assertThat(musician).isNotNull();
         assertThat(musician.id).isNotNull();
     }

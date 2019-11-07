@@ -1,13 +1,11 @@
 package de.oneaxis.ddd.sharedkernel;
 
-import org.bson.types.ObjectId;
-
 import java.util.Objects;
 
 public abstract class AbstractEntityId {
-    public final ObjectId value;
+    public final String value;
 
-    protected AbstractEntityId(ObjectId value) {
+    public AbstractEntityId(String value) {
         this.value = value;
     }
 

@@ -1,10 +1,6 @@
 package de.oneaxis.apollon.connect.application.musician;
 
 import de.oneaxis.apollon.connect.model.SearchLocation;
-import de.oneaxis.apollon.connect.model.SearchLocationAlreadyAssigned;
-import de.oneaxis.apollon.connect.model.musician.Musician;
-import de.oneaxis.apollon.connect.model.musician.MusicianFactory;
-import de.oneaxis.apollon.connect.model.musician.MusicianId;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,36 +9,34 @@ import java.util.List;
 @RequestMapping("musicians")
 class MusicianController {
 
-    private final MusicianRepositoryImpl musicianRepository;
+    private final MusicianService musicianService;
 
-    MusicianController(MusicianRepositoryImpl musicianRepository) {
-        this.musicianRepository = musicianRepository;
+    public MusicianController(MusicianService musicianService) {
+        this.musicianService = musicianService;
     }
 
     @GetMapping
-    List getAll() {
-        return musicianRepository.findAll();
+    List<MusicianResponse> getAll() {
+        return musicianService.getAll();
     }
 
     @GetMapping("{id}")
-    Musician getById(@PathVariable MusicianId id) {
-        return musicianRepository.findById(id).orElseThrow();
+    MusicianResponse getById(@PathVariable String id) {
+        return musicianService.getById(id);
     }
 
     @PostMapping
-    Musician createNew() {
-        return musicianRepository.save(MusicianFactory.createBlank());
+    MusicianResponse createNew() {
+        return musicianService.createNew();
     }
 
     @PostMapping("{id}/searchLocations")
-    Musician addSearchLocation(@PathVariable MusicianId id, @RequestBody SearchLocation searchLocation) throws SearchLocationAlreadyAssigned {
-        Musician musician = musicianRepository.findById(id).orElseThrow();
-        musician.addSearchLocation(searchLocation.postalCode);
-        return musicianRepository.save(musician);
+    MusicianResponse addSearchLocation(@PathVariable String id, @RequestBody SearchLocation searchLocation) {
+        return musicianService.addSearchLocation(id, searchLocation);
     }
 
     @DeleteMapping("{id}")
-    void remove(@PathVariable MusicianId id) {
-        musicianRepository.deleteById(id);
+    void deleteById(@PathVariable String id) {
+        musicianService.deleteById(id);
     }
 }
