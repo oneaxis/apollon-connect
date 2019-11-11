@@ -1,21 +1,12 @@
 package de.oneaxis.apollon.connect.application.band;
 
-import de.oneaxis.apollon.connect.application.SearchLocationResponse;
-import de.oneaxis.apollon.connect.application.musician.MusicianResponse;
+import de.oneaxis.apollon.connect.model.band.Band;
 
-import java.util.Set;
+public class BandResponse extends Band {
+    public final String id;
 
-public class BandResponse {
-    final String id;
-    final String name;
-    final Set<MusicianResponse> musicians;
-    final Set<SearchLocationResponse> searchLocations;
-
-    public BandResponse(String id, String name, Set<MusicianResponse> musicians,
-                        Set<SearchLocationResponse> searchLocations) {
-        this.id = id;
-        this.name = name;
-        this.musicians = musicians;
-        this.searchLocations = searchLocations;
+    public BandResponse(Band band) {
+        super(band.id, band.name, band.musicians, band.searchLocations);
+        this.id = band.id.value;
     }
 }

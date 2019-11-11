@@ -15,7 +15,7 @@ public class Musician {
     public final Set<GearId> gearSet;
     public final Set<SearchLocation> searchLocations;
 
-    Musician(MusicianId id, Set<SearchLocation> searchLocations, Set<BandId> bands, Set<GearId> gearSet) {
+    public Musician(MusicianId id, Set<SearchLocation> searchLocations, Set<BandId> bands, Set<GearId> gearSet) {
         this.id = id;
         this.searchLocations = searchLocations;
         this.bands = bands;

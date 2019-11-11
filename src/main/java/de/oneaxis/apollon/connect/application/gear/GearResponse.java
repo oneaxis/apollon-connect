@@ -1,12 +1,13 @@
 package de.oneaxis.apollon.connect.application.gear;
 
-public class GearResponse {
+import de.oneaxis.apollon.connect.model.gear.Gear;
+
+public class GearResponse extends Gear {
 
     public final String id;
-    public final String type;
 
-    public GearResponse(String id, String type) {
-        this.id = id;
-        this.type = type;
+    public GearResponse(Gear gear) {
+        super(gear.type, gear.id);
+        this.id = gear.id.value;
     }
 }
