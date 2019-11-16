@@ -9,13 +9,13 @@ import java.util.Objects;
 import java.util.Set;
 
 @AggregateRoot
-class Musician {
+public class Musician {
     private final MusicianId id;
     private final Set<PlayedInstrument> playedInstruments;
     private Set<BandId> bands = new HashSet<>();
     private Set<BandSearch> bandSearches = new HashSet<>();
 
-    Musician(MusicianId id, Set<PlayedInstrument> playedInstruments) throws MusicianWithoutInstrumentException {
+    public Musician(MusicianId id, Set<PlayedInstrument> playedInstruments) throws MusicianWithoutInstrumentException {
         this.id = Objects.requireNonNull(id);
         this.playedInstruments = playedInstruments;
 
@@ -49,6 +49,10 @@ class Musician {
     public void startNewBandSearch(SearchLocation searchLocation) {
         BandSearch bandSearch = new BandSearch(Objects.requireNonNull(searchLocation));
         this.bandSearches.add(bandSearch);
+    }
+
+    public void stopBandSearch(BandSearch bandSearch) {
+        this.bandSearches.remove(Objects.requireNonNull(bandSearch));
     }
 
     public void addBand(BandId id) {

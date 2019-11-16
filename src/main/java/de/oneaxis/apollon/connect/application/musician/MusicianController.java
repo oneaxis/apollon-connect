@@ -1,9 +1,11 @@
 package de.oneaxis.apollon.connect.application.musician;
 
-import de.oneaxis.apollon.connect.model.SearchLocation;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("musicians")
@@ -15,28 +17,13 @@ class MusicianController {
         this.musicianService = musicianService;
     }
 
-    @GetMapping
-    List<MusicianResponse> getAll() {
-        return musicianService.getAll();
-    }
-
-    @GetMapping("{id}")
-    MusicianResponse getById(@PathVariable String id) {
-        return musicianService.getById(id);
-    }
-
     @PostMapping
-    MusicianResponse createNew() {
-        return musicianService.createNew();
+    MusicianResponse createNewMusician(MusicianRequest musicianRequest) {
+        return this.musicianService.createNewMusician(musicianRequest);
     }
 
-    @PostMapping("{id}/searchLocations")
-    MusicianResponse addSearchLocation(@PathVariable String id, @RequestBody SearchLocation searchLocation) {
-        return musicianService.addSearchLocation(id, searchLocation);
-    }
-
-    @DeleteMapping("{id}")
-    void deleteById(@PathVariable String id) {
-        musicianService.deleteById(id);
+    @GetMapping
+    Set<MusicianResponse> getAllMusicians() {
+        return this.musicianService.getAllMusicians();
     }
 }

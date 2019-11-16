@@ -6,12 +6,12 @@ import java.util.Objects;
 import java.util.Set;
 
 @AggregateRoot
-class Band {
-    final BandId id;
-    final BandName name;
-    final Set<MusicianSearch> musicianSearches;
+public class Band {
+    private final BandId id;
+    private final BandName name;
+    private final Set<MusicianSearch> musicianSearches;
 
-    Band(BandId id, BandName name, Set<MusicianSearch> musicianSearches) {
+    public Band(BandId id, BandName name, Set<MusicianSearch> musicianSearches) {
         this.id = Objects.requireNonNull(id);
         this.name = name;
         this.musicianSearches = musicianSearches;
