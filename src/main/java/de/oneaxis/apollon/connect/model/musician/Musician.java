@@ -1,36 +1,57 @@
 package de.oneaxis.apollon.connect.model.musician;
 
-import de.oneaxis.apollon.connect.model.SearchLocationAlreadyAssignedException;
-import de.oneaxis.apollon.connect.model.band.BandId;
-import de.oneaxis.apollon.connect.model.gear.GearId;
 import de.oneaxis.apollon.connect.model.SearchLocation;
-import de.oneaxis.ddd.sharedkernel.AggregateRoot;
+import de.oneaxis.apollon.connect.model.band.BandId;
+import de.oneaxis.ddd.conceptual.AggregateRoot;
 
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @AggregateRoot
-public class Musician {
-    public final MusicianId id;
-    public final Set<BandId> bands;
-    public final Set<GearId> gearSet;
-    public final Set<SearchLocation> searchLocations;
+class Musician {
+    private final MusicianId id;
+    private final Set<PlayedInstrument> playedInstruments;
+    private Set<BandId> bands = new HashSet<>();
+    private Set<BandSearch> bandSearches = new HashSet<>();
 
-    public Musician(MusicianId id, Set<SearchLocation> searchLocations, Set<BandId> bands, Set<GearId> gearSet) {
-        this.id = id;
-        this.searchLocations = searchLocations;
+    Musician(MusicianId id, Set<PlayedInstrument> playedInstruments) throws MusicianWithoutInstrumentException {
+        this.id = Objects.requireNonNull(id);
+        this.playedInstruments = playedInstruments;
+
+        if (playedInstruments == null || playedInstruments.isEmpty()) throw new MusicianWithoutInstrumentException();
+    }
+
+    public void setBands(Set<BandId> bands) {
         this.bands = bands;
-        this.gearSet = gearSet;
     }
 
-    public void stopAllSearches() {
-        searchLocations.clear();
+    public void setBandSearches(Set<BandSearch> bandSearches) {
+        this.bandSearches = bandSearches;
     }
 
-    public void stopSearchOn(SearchLocation searchLocation) {
-        searchLocations.remove(searchLocation);
+    public MusicianId getId() {
+        return id;
     }
 
-    public void addSearchLocation(String postalCode) throws SearchLocationAlreadyAssignedException {
-        if (!searchLocations.add(new SearchLocation(postalCode))) throw new SearchLocationAlreadyAssignedException();
+    public Set<PlayedInstrument> getPlayedInstruments() {
+        return playedInstruments;
+    }
+
+    public Set<BandId> getBands() {
+        return bands;
+    }
+
+    public Set<BandSearch> getBandSearches() {
+        return bandSearches;
+    }
+
+    public void startNewBandSearch(SearchLocation searchLocation) {
+        BandSearch bandSearch = new BandSearch(Objects.requireNonNull(searchLocation));
+        this.bandSearches.add(bandSearch);
+    }
+
+    public void addBand(BandId id) {
+        this.bands.add(Objects.requireNonNull(id));
     }
 }

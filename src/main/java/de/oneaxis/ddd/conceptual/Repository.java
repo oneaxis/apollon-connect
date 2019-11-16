@@ -1,4 +1,4 @@
-package de.oneaxis.ddd.sharedkernel;
+package de.oneaxis.ddd.conceptual;
 
 /**
  * Repositories are more coarse-grained than DAOs by providing control of an entire {@link AggregateRoot} often hiding a

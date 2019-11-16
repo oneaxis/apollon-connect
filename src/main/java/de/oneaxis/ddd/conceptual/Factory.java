@@ -1,4 +1,4 @@
-package de.oneaxis.ddd.sharedkernel;
+package de.oneaxis.ddd.conceptual;
 
 /**
  * A Factory is an object that has the single responsibility of creating other objects. This is achieved by providing

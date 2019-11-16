@@ -1,4 +1,4 @@
-package de.oneaxis.ddd.sharedkernel;
+package de.oneaxis.ddd.conceptual;
 
 /**
  * An entity is an object with a unique identity that persists over time. For example, in a banking application,

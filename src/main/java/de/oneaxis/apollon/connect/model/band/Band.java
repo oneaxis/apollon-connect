@@ -1,22 +1,19 @@
 package de.oneaxis.apollon.connect.model.band;
 
-import de.oneaxis.apollon.connect.model.SearchLocation;
-import de.oneaxis.apollon.connect.model.musician.MusicianId;
-import de.oneaxis.ddd.sharedkernel.AggregateRoot;
+import de.oneaxis.ddd.conceptual.AggregateRoot;
 
+import java.util.Objects;
 import java.util.Set;
 
 @AggregateRoot
-public class Band {
-    public final BandId id;
-    public final BandName name;
-    public final Set<MusicianId> musicians;
-    public final Set<SearchLocation> searchLocations;
+class Band {
+    final BandId id;
+    final BandName name;
+    final Set<MusicianSearch> musicianSearches;
 
-    public Band(BandId id, BandName name, Set<MusicianId> musicians, Set<SearchLocation> searchLocations) {
-        this.id = id;
+    Band(BandId id, BandName name, Set<MusicianSearch> musicianSearches) {
+        this.id = Objects.requireNonNull(id);
         this.name = name;
-        this.musicians = musicians;
-        this.searchLocations = searchLocations;
+        this.musicianSearches = musicianSearches;
     }
 }

@@ -1,7 +1,7 @@
 package de.oneaxis.apollon.connect.model.musician;
 
-import de.oneaxis.ddd.sharedkernel.AbstractEntityId;
-import de.oneaxis.ddd.sharedkernel.ValueObject;
+import de.oneaxis.ddd.conceptual.AbstractEntityId;
+import de.oneaxis.ddd.conceptual.ValueObject;
 
 @ValueObject
 public class MusicianId extends AbstractEntityId {

@@ -1,4 +1,4 @@
-package de.oneaxis.ddd.sharedkernel;
+package de.oneaxis.ddd.conceptual;
 
 /**
  * In DDD terminology, a service is an object that implements some logic without holding any state. Evans distinguishes

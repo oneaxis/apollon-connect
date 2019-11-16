@@ -1,4 +1,4 @@
-package de.oneaxis.ddd.sharedkernel;
+package de.oneaxis.ddd.conceptual;
 
 /**
  * An aggregate defines a consistency boundary around one or more entities. Exactly one entity in an aggregate is the

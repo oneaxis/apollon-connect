@@ -1,4 +1,4 @@
-package de.oneaxis.ddd.sharedkernel;
+package de.oneaxis.ddd.conceptual;
 
 /**
  * Domain events can be used to notify other parts of the system when something happens. As the type suggests,

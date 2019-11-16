@@ -1,6 +1,6 @@
 package de.oneaxis.apollon.connect.model;
 
-import de.oneaxis.ddd.sharedkernel.ValueObject;
+import de.oneaxis.ddd.conceptual.ValueObject;
 
 import java.util.Objects;
 
