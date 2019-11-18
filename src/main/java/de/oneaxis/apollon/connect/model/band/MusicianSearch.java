@@ -1,11 +1,11 @@
 package de.oneaxis.apollon.connect.model.band;
 
-import de.oneaxis.apollon.connect.model.SearchLocation;
+import de.oneaxis.apollon.connect.model.Location;
 
 class MusicianSearch {
-    final SearchLocation searchLocation;
+    final Location location;
 
-    MusicianSearch(SearchLocation searchLocation) {
-        this.searchLocation = searchLocation;
+    MusicianSearch(Location location) {
+        this.location = location;
     }
 }

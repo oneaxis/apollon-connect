@@ -7,5 +7,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MusicianRepositoryImpl extends MusicianRepository, MongoRepository<Musician, MusicianId> {
+interface MusicianRepositoryImpl extends MusicianRepository, MongoRepository<Musician, MusicianId> {
 }

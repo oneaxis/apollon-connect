@@ -1,13 +1,13 @@
 package de.oneaxis.apollon.connect.model.musician;
 
-import de.oneaxis.apollon.connect.model.SearchLocation;
+import de.oneaxis.apollon.connect.model.Location;
 import de.oneaxis.ddd.conceptual.ValueObject;
 
 @ValueObject
-class BandSearch {
-    final SearchLocation searchLocation;
+public class BandSearch {
+    public final Location location;
 
-    BandSearch(SearchLocation searchLocation) {
-        this.searchLocation = searchLocation;
+    BandSearch(Location location) {
+        this.location = location;
     }
 }

@@ -5,10 +5,10 @@ import de.oneaxis.ddd.conceptual.ValueObject;
 import java.util.Objects;
 
 @ValueObject
-public class SearchLocation {
+public class Location {
     public final String postalCode;
 
-    public SearchLocation(String postalCode) {
+    public Location(String postalCode) {
         this.postalCode = postalCode;
     }
 
@@ -16,7 +16,7 @@ public class SearchLocation {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SearchLocation that = (SearchLocation) o;
+        Location that = (Location) o;
         return postalCode.equals(that.postalCode);
     }
 

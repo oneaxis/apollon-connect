@@ -1,9 +1,6 @@
 package de.oneaxis.apollon.connect.application.musician;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
@@ -18,7 +15,7 @@ class MusicianController {
     }
 
     @PostMapping
-    MusicianResponse createNewMusician(MusicianRequest musicianRequest) {
+    MusicianResponse createNewMusician(@RequestBody MusicianRequest musicianRequest) {
         return this.musicianService.createNewMusician(musicianRequest);
     }
 
