@@ -2,6 +2,8 @@ package de.oneaxis.apollon.connect.application.musician;
 
 import de.oneaxis.apollon.connect.application.instrument.InstrumentRequest;
 import de.oneaxis.apollon.connect.application.instrument.InstrumentResponse;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,23 +25,28 @@ class MusicianControllerTests {
     @LocalServerPort
     private int randomServerPort;
 
+    private InstrumentRequest instrumentRequest;
+
+    @BeforeEach
+    void initTestInstances() {
+        createTestInstrument();
+    }
+
     @Test
     void ShouldCreateNewMusician() {
+        MusicianRequest musicianRequest = new MusicianRequest(Set.of(this.instrumentRequest));
+        String musiciansUrl = String.format("http://localhost:%s/musicians", randomServerPort);
+        MusicianResponse response = restTemplate.postForObject(musiciansUrl, musicianRequest, MusicianResponse.class);
+        assertThat(response).isNotNull();
+        assertThat(response.id).isNotNull();
+        assertThat(response.instruments).isNotNull();
+    }
 
-        //Create instrument
+    private void createTestInstrument() {
         String instrumentsUrl = String.format("http://localhost:%s/instruments", randomServerPort);
         InstrumentRequest instrumentRequest = new InstrumentRequest(null, "Guitar");
         InstrumentResponse instrumentResponse = restTemplate.postForObject(instrumentsUrl, instrumentRequest, InstrumentResponse.class);
         assertThat(instrumentResponse.id).isNotEmpty();
-        instrumentRequest = new InstrumentRequest(instrumentResponse.id, instrumentResponse.name);
-
-        // Create musician
-        MusicianRequest musicianRequest = new MusicianRequest(Set.of(instrumentRequest));
-
-        String musiciansUrl = String.format("http://localhost:%s/musicians", randomServerPort);
-        ResponseEntity<MusicianResponse> response = restTemplate.postForEntity(musiciansUrl, musicianRequest, MusicianResponse.class);
-        assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
-        assertThat(response.getBody()).isNotNull();
-        assertThat(response.getBody().id).isNotNull();
+        this.instrumentRequest = new InstrumentRequest(instrumentResponse.id, instrumentResponse.name);
     }
 }
