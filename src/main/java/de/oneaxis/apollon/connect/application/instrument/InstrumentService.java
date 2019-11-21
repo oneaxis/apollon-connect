@@ -1,9 +1,10 @@
 package de.oneaxis.apollon.connect.application.instrument;
 
 import de.oneaxis.apollon.connect.model.instrument.Instrument;
-import de.oneaxis.apollon.connect.model.instrument.InstrumentId;
-import org.bson.types.ObjectId;
+import de.oneaxis.apollon.connect.model.instrument.InstrumentWithoutNameException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class InstrumentService {
@@ -14,22 +15,13 @@ public class InstrumentService {
         this.instrumentRepository = instrumentRepository;
     }
 
-    InstrumentResponse saveInstrument(InstrumentRequest instrumentRequest) {
-        InstrumentId instrumentId = new InstrumentId(ObjectId.get().toString());
-
-        Instrument instrument = this.instrumentRepository.save(
-                new Instrument(instrumentId, instrumentRequest.name)
-        );
-
-        return InstrumentResponse.fromInstrument(instrument);
-    }
-
-    public Instrument getInstrumentFromRequest(InstrumentRequest instrumentRequest) {
-        InstrumentId instrumentId = new InstrumentId(instrumentRequest.id);
-        return this.instrumentRepository.findById(instrumentId).orElseThrow();
-    }
-
-    public InstrumentResponse getById(InstrumentId instrumentId) {
-        return InstrumentResponse.fromInstrument(this.instrumentRepository.findById(instrumentId).orElseThrow());
+    InstrumentRest saveInstrument(InstrumentRest instrumentRest) {
+        try {
+            Instrument instrument = this.instrumentRepository.save(new Instrument(instrumentRest.name));
+            return InstrumentRest.fromInstrument(instrument);
+        } catch (InstrumentWithoutNameException e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 }

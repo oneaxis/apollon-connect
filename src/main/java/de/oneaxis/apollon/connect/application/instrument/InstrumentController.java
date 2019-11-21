@@ -8,12 +8,12 @@ class InstrumentController {
 
     private final InstrumentService instrumentService;
 
-    InstrumentController(InstrumentService instrumentService) {
+    public InstrumentController(InstrumentService instrumentService) {
         this.instrumentService = instrumentService;
     }
 
     @PostMapping
-    InstrumentResponse saveInstrument(@RequestBody InstrumentRequest instrumentRequest) {
-        return this.instrumentService.saveInstrument(instrumentRequest);
+    public InstrumentRest saveInstrument(@RequestBody InstrumentRest instrumentRest) {
+        return this.instrumentService.saveInstrument(instrumentRest);
     }
 }

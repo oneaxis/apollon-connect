@@ -7,9 +7,9 @@ import java.util.Set;
 
 @AggregateRoot
 public class Band {
-    private final BandId id;
-    private final BandName name;
-    private final Set<MusicianSearch> musicianSearches;
+    public final BandId id;
+    public final BandName name;
+    public final Set<MusicianSearch> musicianSearches;
 
     public Band(BandId id, BandName name, Set<MusicianSearch> musicianSearches) {
         this.id = Objects.requireNonNull(id);

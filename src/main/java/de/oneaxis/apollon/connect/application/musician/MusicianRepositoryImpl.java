@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 interface MusicianRepositoryImpl extends MusicianRepository, MongoRepository<Musician, MusicianId> {
+
 }

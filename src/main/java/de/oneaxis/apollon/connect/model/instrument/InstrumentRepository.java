@@ -1,7 +1,7 @@
 package de.oneaxis.apollon.connect.model.instrument;
 
-import de.oneaxis.ddd.conceptual.Repository;
 
-@Repository
-public interface InstrumentRepository {
+import de.oneaxis.apollon.connect.model.Repository;
+
+public interface InstrumentRepository extends Repository<Instrument, InstrumentId> { 
 }

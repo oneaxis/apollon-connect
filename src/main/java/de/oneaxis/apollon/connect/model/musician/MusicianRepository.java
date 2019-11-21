@@ -1,7 +1,6 @@
 package de.oneaxis.apollon.connect.model.musician;
 
-import de.oneaxis.ddd.conceptual.Repository;
+import de.oneaxis.apollon.connect.model.Repository;
 
-@Repository
-public interface MusicianRepository {
+public interface MusicianRepository extends Repository<Musician, MusicianId> {
 }

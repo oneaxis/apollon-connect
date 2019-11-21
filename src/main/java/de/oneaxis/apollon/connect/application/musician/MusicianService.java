@@ -1,15 +1,14 @@
 package de.oneaxis.apollon.connect.application.musician;
 
-import de.oneaxis.apollon.connect.application.instrument.InstrumentResponse;
-import de.oneaxis.apollon.connect.application.instrument.InstrumentService;
+import de.oneaxis.apollon.connect.application.band.BandRepositoryImpl;
+import de.oneaxis.apollon.connect.application.band.BandRest;
+import de.oneaxis.apollon.connect.application.instrument.InstrumentRepositoryImpl;
+import de.oneaxis.apollon.connect.application.instrument.InstrumentRest;
+import de.oneaxis.apollon.connect.model.band.BandId;
 import de.oneaxis.apollon.connect.model.instrument.InstrumentId;
 import de.oneaxis.apollon.connect.model.musician.Musician;
 import de.oneaxis.apollon.connect.model.musician.MusicianId;
-import de.oneaxis.apollon.connect.model.musician.MusicianWithoutInstrumentException;
-import org.bson.types.ObjectId;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,44 +17,59 @@ import java.util.stream.Collectors;
 class MusicianService {
 
     private final MusicianRepositoryImpl musicianRepository;
-    private final InstrumentService instrumentService;
+    private final BandRepositoryImpl bandRepository;
+    private final InstrumentRepositoryImpl instrumentRepository;
 
-    MusicianService(MusicianRepositoryImpl musicianRepository, InstrumentService instrumentService) {
+    MusicianService(MusicianRepositoryImpl musicianRepository, BandRepositoryImpl bandRepository,
+                    InstrumentRepositoryImpl instrumentRepository) {
         this.musicianRepository = musicianRepository;
-        this.instrumentService = instrumentService;
+        this.bandRepository = bandRepository;
+        this.instrumentRepository = instrumentRepository;
     }
 
-    MusicianResponse createNewMusician(MusicianRequest musicianRequest) {
-        try {
-            MusicianId musicianId = new MusicianId(new ObjectId().toString());
-
-            Set<InstrumentId> instruments = musicianRequest.instruments.stream()
-                    .map(this.instrumentService::getInstrumentFromRequest)
-                    .map(instrument -> instrument.id)
-                    .collect(Collectors.toSet());
-
-            Musician musician = this.musicianRepository.save(new Musician(musicianId, instruments));
-
-            return this.fromMusician(musician);
-        } catch (MusicianWithoutInstrumentException e) {
-            e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
+    MusicianRest createNewMusician() {
+        Musician musician = this.musicianRepository.save(new Musician());
+        return this.fromMusician(musician);
     }
 
-    Set<MusicianResponse> getAllMusicians() {
+    MusicianRest saveMusician(MusicianRest musicianRest) {
+
+        Set<InstrumentId> instruments = musicianRest.instruments.stream()
+                .map(instrumentRest -> new InstrumentId(instrumentRest.id))
+                .map(instrumentId -> this.instrumentRepository.findById(instrumentId).orElseThrow())
+                .map(instrument -> instrument.id)
+                .collect(Collectors.toSet());
+
+        Set<BandId> bands = musicianRest.bands.stream()
+                .map(bandRest -> new BandId(bandRest.id))
+                .map(bandId -> this.bandRepository.findById(bandId).orElseThrow())
+                .map(band -> band.id)
+                .collect(Collectors.toSet());
+
+        Musician musician = new Musician(new MusicianId(musicianRest.id), instruments, bands, musicianRest.bandSearches);
+
+        return this.fromMusician(this.musicianRepository.save(musician));
+    }
+
+    Set<MusicianRest> getAllMusicians() {
         return this.musicianRepository.findAll().stream()
                 .map(this::fromMusician)
                 .collect(Collectors.toSet());
     }
 
-    private MusicianResponse fromMusician(Musician musician) {
+    private MusicianRest fromMusician(Musician musician) {
 
-        Set<InstrumentResponse> instruments = musician.instruments.stream()
-                .map(this.instrumentService::getById)
+        Set<InstrumentRest> instruments = musician.instruments.stream()
+                .map(instrumentId -> this.instrumentRepository.findById(instrumentId).orElseThrow())
+                .map(InstrumentRest::fromInstrument)
                 .collect(Collectors.toSet());
 
-        return new MusicianResponse(musician.id.value, instruments);
+        Set<BandRest> bands = musician.bands.stream()
+                .map(bandId -> this.bandRepository.findById(bandId).orElseThrow())
+                .map(BandRest::fromBand)
+                .collect(Collectors.toSet());
+
+        return new MusicianRest(musician.id.value, instruments, bands, musician.bandSearches);
     }
 }
 

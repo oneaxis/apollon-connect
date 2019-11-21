@@ -1,7 +1,7 @@
 package de.oneaxis.apollon.connect.model.band;
 
-import de.oneaxis.ddd.conceptual.Repository;
 
-@Repository
-public interface BandRepository {
+import de.oneaxis.apollon.connect.model.Repository;
+
+public interface BandRepository extends Repository<Band, BandId> {
 }
