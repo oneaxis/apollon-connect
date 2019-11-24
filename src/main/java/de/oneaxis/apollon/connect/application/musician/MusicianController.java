@@ -1,31 +1,43 @@
 package de.oneaxis.apollon.connect.application.musician;
 
+import de.oneaxis.apollon.connect.model.musician.Musician;
+import de.oneaxis.apollon.connect.model.musician.MusicianId;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @RestController
 @RequestMapping("musicians")
 class MusicianController {
 
-    private final MusicianService musicianService;
+    private final MusicianRepositoryImpl musicianRepository;
 
-    public MusicianController(MusicianService musicianService) {
-        this.musicianService = musicianService;
+    MusicianController(MusicianRepositoryImpl musicianRepository) {
+        this.musicianRepository = musicianRepository;
     }
 
     @GetMapping("new")
-    MusicianRest createNewMusician() {
-        return this.musicianService.createNewMusician();
+    Musician createNewMusician() {
+        return this.musicianRepository.save(new Musician());
+    }
+
+    @GetMapping("{id}")
+    Musician getMusician(@PathVariable String id) {
+        return this.musicianRepository.findById(new MusicianId(id)).orElseThrow();
     }
 
     @PutMapping
-    MusicianRest saveMusician(@RequestBody MusicianRest musicianRest) {
-        return this.musicianService.saveMusician(musicianRest);
+    Musician saveMusician(@RequestBody Musician musician) {
+        if (!this.musicianRepository.existsById(musician.id))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        return this.musicianRepository.save(musician);
     }
 
     @GetMapping
-    Set<MusicianRest> getAllMusicians() {
-        return this.musicianService.getAllMusicians();
+    Set<Musician> getAllMusicians() {
+        return new HashSet<>(this.musicianRepository.findAll());
     }
 }
