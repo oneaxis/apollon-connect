@@ -6,6 +6,6 @@ package de.oneaxis.ddd.conceptual;
  * and are referenced by following pointers from the root.
  */
 @Entity
-public @interface AggregateRoot {
+public @interface Aggregate {
 
 }
