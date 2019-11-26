@@ -1,27 +1,21 @@
 package de.oneaxis.apollon.connect.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import de.oneaxis.ddd.conceptual.ValueObject;
+import lombok.Builder;
+import lombok.Value;
 
 import java.util.Objects;
 
 @ValueObject
+@Value
 public class Location {
-    public final String postalCode;
+    private final String postalCode;
 
-    public Location(String postalCode) {
+    @Builder
+    @JsonCreator
+    public Location(@JsonProperty("postalCode") String postalCode) {
         this.postalCode = postalCode;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Location that = (Location) o;
-        return postalCode.equals(that.postalCode);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(postalCode);
     }
 }

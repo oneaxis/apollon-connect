@@ -1,19 +1,29 @@
 package de.oneaxis.apollon.connect.model.band;
 
-import de.oneaxis.ddd.conceptual.AggregateRoot;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import de.oneaxis.ddd.conceptual.Aggregate;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Singular;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@AggregateRoot
+@Aggregate
+@Getter
+@Setter
 public class Band {
-    public final BandId id;
-    public final BandName name;
-    public final Set<MusicianSearch> musicianSearches;
+    private final BandId id;
+    private BandName name;
+    @Singular
+    private Set<MusicianSearch> musicianSearches = new HashSet<>();
 
-    public Band(BandId id, BandName name, Set<MusicianSearch> musicianSearches) {
+    @Builder
+    @JsonCreator
+    public Band(@JsonProperty("id") BandId id) {
         this.id = Objects.requireNonNull(id);
-        this.name = name;
-        this.musicianSearches = musicianSearches;
     }
 }

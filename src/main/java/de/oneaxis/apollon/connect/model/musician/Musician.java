@@ -1,34 +1,33 @@
 package de.oneaxis.apollon.connect.model.musician;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import de.oneaxis.apollon.connect.model.Location;
 import de.oneaxis.apollon.connect.model.band.BandId;
 import de.oneaxis.apollon.connect.model.instrument.InstrumentId;
-import de.oneaxis.ddd.conceptual.AggregateRoot;
-import org.bson.types.ObjectId;
+import de.oneaxis.ddd.conceptual.Aggregate;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@AggregateRoot
+@Aggregate
+@Getter
+@Setter
 public class Musician {
-    public final MusicianId id;
-    public final Set<InstrumentId> instruments = new HashSet<>();
-    public final Set<BandId> bands = new HashSet<>();
-    public final Set<BandSearch> bandSearches = new HashSet<>();
+    private final MusicianId id;
+    @Singular
+    private Set<InstrumentId> instruments = new HashSet<>();
+    @Singular
+    private Set<BandId> bands = new HashSet<>();
+    @Singular
+    private Set<BandSearch> bandSearches = new HashSet<>();
 
-    public Musician() {
-        this.id = new MusicianId(ObjectId.get().toString());
-    }
-
-    public Musician(MusicianId id, Set<InstrumentId> instruments, Set<BandId> bands, Set<BandSearch> bandSearches) {
-        this.id = Objects.requireNonNull(id);
-        if (Objects.nonNull(instruments) && !instruments.isEmpty())
-            this.instruments.addAll(instruments);
-        if (Objects.nonNull(bands) && !bands.isEmpty())
-            this.bands.addAll(bands);
-        if (Objects.nonNull(bandSearches) && !bandSearches.isEmpty())
-            this.bandSearches.addAll(bandSearches);
+    @Builder
+    @JsonCreator
+    public Musician(@JsonProperty("id") MusicianId id) {
+        this.id = id;
     }
 
     public void startBandSearch(Location location) {
@@ -48,3 +47,5 @@ public class Musician {
         this.bands.remove(Objects.requireNonNull(bandId));
     }
 }
+
+

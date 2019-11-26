@@ -1,5 +1,6 @@
 package de.oneaxis.apollon.connect.application.musician;
 
+import de.oneaxis.apollon.connect.model.band.Band;
 import de.oneaxis.apollon.connect.model.band.BandId;
 import de.oneaxis.apollon.connect.model.musician.Musician;
 import org.bson.types.ObjectId;
@@ -24,72 +25,28 @@ class MusicianControllerTests {
 
     @Test
     void Test0_ShouldCreateNewMusician() {
-        Musician musician = this.restTemplate.getForObject(musiciansEndpoint() + "/new", Musician.class);
-        assertThat(musician.id).isNotNull();
+        Musician musician = this.restTemplate.getForObject(musiciansEndpoint("new"), Musician.class);
+        assertThat(musician.getId()).isNotNull();
         sharedTestMusician = musician;
     }
 
     @Test
     void Test1_GivenExistingMusician_ShouldAddNewBand() {
-        BandId bandId = new BandId(ObjectId.get().toString());
-        sharedTestMusician.bands.add(bandId);
-        this.restTemplate.put(musiciansEndpoint(), sharedTestMusician);
+        Band band = this.restTemplate.getForObject(bandsEndpoint("new"), Band.class);
+        assertThat(band.getId().getValue()).isNotEmpty();
+
+        String joinBandEndpoint = musiciansEndpoint(String.format("%s/bands", sharedTestMusician.getId()));
+        sharedTestMusician = this.restTemplate.postForObject(joinBandEndpoint, band.getId().getValue(), Musician.class);
+        assertThat(sharedTestMusician.getBands()).containsOnlyOnce(band.getId());
     }
 
-    @Test
-    void Test2_GivenExistingMusician_ShoudlGetMusicianWithBand() {
-        Musician musician = this.restTemplate.getForObject(musiciansEndpoint() + "/" + sharedTestMusician.id.value,
-                Musician.class);
-        assertThat(musician.id).isEqualToComparingFieldByField(sharedTestMusician.id);
-        assertThat(musician.bands).isEqualTo(sharedTestMusician.bands);
+    private String musiciansEndpoint(String uri) {
+        String musiciansEndpointTemplate = "http://localhost:%s/musicians/%s";
+        return String.format(musiciansEndpointTemplate, randomServerPort, uri != null ? uri : "");
     }
 
-
-//    @Test
-//    @Order(1)
-//    public void ShouldCreateNewMusician() {
-//        sharedTestMusician = restTemplate.getForObject(musiciansEndpoint() + "/new", MusicianRest.class);
-//        isValid(sharedTestMusician);
-//    }
-//
-//    @Test
-//    @Order(2)
-//    public void ShouldAssignInstrument() throws InstrumentWithoutNameException {
-//        InstrumentRest instrumentRest = createTestInstrument();
-//        sharedTestMusician.instruments.add(instrumentRest);
-//
-//        HttpEntity<MusicianRest> entity = new HttpEntity<>(sharedTestMusician);
-//        sharedTestMusician = restTemplate.exchange(musiciansEndpoint(), HttpMethod.PUT, entity, MusicianRest.class).getBody();
-//        isValid(sharedTestMusician);
-//    }
-
-    void ShouldStartBandSearch() {
-
+    private String bandsEndpoint(String uri) {
+        String bandsEndpointTemplate = "http://localhost:%s/bands";
+        return String.format(bandsEndpointTemplate, randomServerPort, uri != null ? uri : "");
     }
-
-
-    void ShouldRemoveInstrument() {
-
-    }
-
-    //    private InstrumentRest createTestInstrument() throws InstrumentWithoutNameException {
-//        String instrumentsUrl = String.format("http://localhost:%s/instruments", randomServerPort);
-//        InstrumentRest instumentRest = new InstrumentRest(null, "Guitar");
-//        InstrumentRest instrumentRest = restTemplate.postForObject(instrumentsUrl, instumentRest, InstrumentRest.class);
-//        assertThat(instrumentRest.id.value).isNotEmpty();
-//        return instrumentRest;
-//    }
-//
-    private String musiciansEndpoint() {
-        String musiciansEndpointTemplate = "http://localhost:%s/musicians";
-        return String.format(musiciansEndpointTemplate, randomServerPort);
-    }
-//
-//    private void isValid(MusicianRest musicianRest) {
-//        assertThat(musicianRest).isNotNull();
-//        assertThat(musicianRest.id).isNotNull();
-//        assertThat(musicianRest.instruments).isNotNull();
-//        assertThat(musicianRest.bands).isNotNull();
-//        assertThat(musicianRest.bandSearches).isNotNull();
-//    }
 }

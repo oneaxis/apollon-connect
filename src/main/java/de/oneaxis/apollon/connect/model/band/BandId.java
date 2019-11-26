@@ -1,11 +1,19 @@
 package de.oneaxis.apollon.connect.model.band;
 
-import de.oneaxis.ddd.conceptual.AbstractEntityId;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import de.oneaxis.ddd.conceptual.ValueObject;
+import lombok.Builder;
+import lombok.Value;
 
 @ValueObject
-public class BandId extends AbstractEntityId {
-    public BandId(String value) {
-        super(value);
+@Value
+public class BandId {
+    private final String value;
+
+    @Builder
+    @JsonCreator
+    public BandId(@JsonProperty("value") String value) {
+        this.value = value;
     }
 }
