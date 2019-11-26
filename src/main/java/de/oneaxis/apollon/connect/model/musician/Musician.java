@@ -40,11 +40,11 @@ public class Musician {
     }
 
     public void leaveBand(BandId bandId) {
-        this.bands.add(Objects.requireNonNull(bandId));
+        this.bands.remove(Objects.requireNonNull(bandId));
     }
 
     public void joinBand(BandId bandId) {
-        this.bands.remove(Objects.requireNonNull(bandId));
+        this.bands.add(Objects.requireNonNull(bandId));
     }
 }
 

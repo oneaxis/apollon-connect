@@ -2,6 +2,7 @@ package de.oneaxis.apollon.connect.application.musician;
 
 import de.oneaxis.apollon.connect.model.band.Band;
 import de.oneaxis.apollon.connect.model.musician.Musician;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,23 +20,22 @@ class MusicianControllerTests {
     @LocalServerPort
     private int randomServerPort;
 
-    private static Musician sharedTestMusician;
+    private Musician testMusician;
 
-    @Test
-    void Test0_ShouldCreateNewMusician() {
-        Musician musician = this.restTemplate.getForObject(musiciansEndpoint("new"), Musician.class);
-        assertThat(musician.getId()).isNotNull();
-        sharedTestMusician = musician;
+    @BeforeEach
+    void ShouldCreateNewMusician() {
+        testMusician = this.restTemplate.getForObject(musiciansEndpoint("new"), Musician.class);
+        assertThat(testMusician.getId().getValue()).isNotEmpty();
     }
 
     @Test
-    void Test1_GivenExistingMusician_ShouldAddNewBand() {
+    void GivenExistingMusician_ShouldAddNewBand() {
         Band band = this.restTemplate.getForObject(bandsEndpoint("new"), Band.class);
         assertThat(band.getId().getValue()).isNotEmpty();
 
-        String joinBandEndpoint = musiciansEndpoint(String.format("%s/bands", sharedTestMusician.getId()));
-        sharedTestMusician = this.restTemplate.postForObject(joinBandEndpoint, band.getId().getValue(), Musician.class);
-        assertThat(sharedTestMusician.getBands()).containsOnlyOnce(band.getId());
+        String joinBandEndpoint = musiciansEndpoint(String.format("%s/bands", testMusician.getId().getValue()));
+        testMusician = this.restTemplate.postForObject(joinBandEndpoint, band.getId().getValue(), Musician.class);
+        assertThat(testMusician.getBands()).containsOnlyOnce(band.getId());
     }
 
     private String musiciansEndpoint(String uri) {
@@ -44,7 +44,7 @@ class MusicianControllerTests {
     }
 
     private String bandsEndpoint(String uri) {
-        String bandsEndpointTemplate = "http://localhost:%s/bands";
+        String bandsEndpointTemplate = "http://localhost:%s/bands/%s";
         return String.format(bandsEndpointTemplate, randomServerPort, uri != null ? uri : "");
     }
 }
