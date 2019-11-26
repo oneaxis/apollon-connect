@@ -27,7 +27,6 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
 
     annotationProcessor 'org.projectlombok:lombok:1.18.10'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.10'
 }
 
 test {

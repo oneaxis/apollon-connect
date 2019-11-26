@@ -1,9 +1,7 @@
 package de.oneaxis.apollon.connect.application.musician;
 
 import de.oneaxis.apollon.connect.model.band.Band;
-import de.oneaxis.apollon.connect.model.band.BandId;
 import de.oneaxis.apollon.connect.model.musician.Musician;
-import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
