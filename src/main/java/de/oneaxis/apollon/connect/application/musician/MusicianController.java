@@ -35,6 +35,15 @@ class MusicianController {
         return this.musicianRepository.findById(musicianId).orElseThrow();
     }
 
+    @DeleteMapping("{id}/bands/{bandId}")
+    Musician leaveBand(@PathVariable String id, @PathVariable String bandId) {
+        Musician musician = this.musicianRepository.findById(MusicianId.builder().value(id).build()).orElseThrow();
+        Band band = this.bandRepository.findById(BandId.builder().value(bandId).build()).orElseThrow();
+
+        musician.leaveBand(band.getId());
+        return this.musicianRepository.save(musician);
+    }
+
     @PostMapping("{id}/bands")
     Musician joinBand(@PathVariable String id, @RequestBody String bandId) {
         Musician musician = this.musicianRepository.findById(MusicianId.builder().value(id).build()).orElseThrow();
