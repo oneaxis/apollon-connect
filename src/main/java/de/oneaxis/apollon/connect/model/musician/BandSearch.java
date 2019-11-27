@@ -1,13 +1,21 @@
 package de.oneaxis.apollon.connect.model.musician;
 
-import de.oneaxis.apollon.connect.model.Location;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import de.oneaxis.ddd.conceptual.ValueObject;
+import lombok.Builder;
+import lombok.Value;
+
+import java.util.Objects;
 
 @ValueObject
+@Value
 public class BandSearch {
-    public final Location location;
+    private String postalCode;
 
-    BandSearch(Location location) {
-        this.location = location;
+    @Builder
+    @JsonCreator
+    public BandSearch(@JsonProperty("postalCode") String postalCode) {
+        this.postalCode = Objects.requireNonNull(postalCode);
     }
 }

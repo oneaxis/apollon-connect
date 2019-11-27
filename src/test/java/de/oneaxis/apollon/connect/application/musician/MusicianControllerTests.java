@@ -5,6 +5,7 @@ import de.oneaxis.apollon.connect.model.band.Band;
 import de.oneaxis.apollon.connect.model.band.BandId;
 import de.oneaxis.apollon.connect.model.instrument.Instrument;
 import de.oneaxis.apollon.connect.model.instrument.InstrumentId;
+import de.oneaxis.apollon.connect.model.musician.BandSearch;
 import de.oneaxis.apollon.connect.model.musician.Musician;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -46,9 +47,7 @@ class MusicianControllerTests {
     @Test
     void Test2_GivenExistingMusicianWithBand_ShouldLeaveNewBand() {
         BandId bandId = (BandId) testMusician.getBands().toArray()[0];
-        this.apiClient.leaveBand(testMusician.getId(), bandId);
-
-        testMusician = this.apiClient.getMusician(testMusician.getId());
+        testMusician = this.apiClient.leaveBand(testMusician.getId(), bandId);
         assertThat(testMusician.getBands()).doesNotContain(bandId);
     }
 
@@ -64,11 +63,24 @@ class MusicianControllerTests {
     @Test
     void Test4_GivenExistingMusicianWithInstrument_ShouldUnassignInstrument() {
         InstrumentId instrumentId = (InstrumentId) testMusician.getInstruments().toArray()[0];
-        this.apiClient.unassignInstrument(testMusician.getId(), instrumentId);
-
-        testMusician = this.apiClient.getMusician(testMusician.getId());
+        testMusician = this.apiClient.unassignInstrument(testMusician.getId(), instrumentId);
         assertThat(testMusician.getInstruments()).doesNotContain(instrumentId);
     }
 
+    @Test
+    void Test5_GivenExistingMusician_ShouldStartBandSearch() {
+        BandSearch bandSearch = BandSearch.builder().postalCode("12345").build();
+        testMusician = this.apiClient.startBandSearch(testMusician.getId(), bandSearch);
+        assertThat(testMusician.getBandSearches()).containsOnlyOnce(bandSearch);
+    }
+
+    @Test
+    void Test6_GivenExistingMusicianWithBandSearch_ShouldStartBandSearch() {
+        BandSearch bandSearch = (BandSearch) testMusician.getBandSearches().toArray()[0];
+        this.apiClient.stopBandSearch(testMusician.getId(), bandSearch);
+
+        testMusician = this.apiClient.getMusician(testMusician.getId());
+        assertThat(testMusician.getBandSearches()).doesNotContain(bandSearch);
+    }
 
 }

@@ -6,13 +6,11 @@ import de.oneaxis.apollon.connect.model.band.Band;
 import de.oneaxis.apollon.connect.model.band.BandId;
 import de.oneaxis.apollon.connect.model.instrument.Instrument;
 import de.oneaxis.apollon.connect.model.instrument.InstrumentId;
+import de.oneaxis.apollon.connect.model.musician.BandSearch;
 import de.oneaxis.apollon.connect.model.musician.Musician;
 import de.oneaxis.apollon.connect.model.musician.MusicianId;
 import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @RestController
 @RequestMapping("musicians")
@@ -76,9 +74,17 @@ class MusicianController {
         return this.musicianRepository.save(musician);
     }
 
+    @DeleteMapping("{id}/bandSearches")
+    Musician stopBandSearch(@PathVariable String id, @RequestBody BandSearch bandSearch) {
+        Musician musician = this.musicianRepository.findById(new MusicianId(id)).orElseThrow();
+        musician.stopBandSearch(bandSearch);
+        return this.musicianRepository.save(musician);
+    }
 
-    @GetMapping
-    Set<Musician> getAllMusicians() {
-        return new HashSet<>(this.musicianRepository.findAll());
+    @PostMapping("{id}/bandSearches")
+    Musician startBandSearch(@PathVariable String id, @RequestBody BandSearch bandSearch) {
+        Musician musician = this.musicianRepository.findById(new MusicianId(id)).orElseThrow();
+        musician.startBandSearch(bandSearch);
+        return this.musicianRepository.save(musician);
     }
 }
