@@ -1,6 +1,5 @@
-package de.oneaxis.apollon.connect;
+package de.oneaxis.apollon.connect.application;
 
-import de.oneaxis.apollon.connect.application.ApollonConnectApplication;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
