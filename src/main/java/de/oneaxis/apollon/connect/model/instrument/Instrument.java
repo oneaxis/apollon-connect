@@ -1,28 +1,22 @@
 package de.oneaxis.apollon.connect.model.instrument;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import de.oneaxis.ddd.conceptual.Entity;
-import org.bson.types.ObjectId;
+import lombok.*;
 
 import java.util.Objects;
 
 @Entity
+@Getter
+@Setter
 public class Instrument {
-    public final InstrumentId id;
-    public final String name;
+    private final InstrumentId id;
+    private String name;
 
-    public Instrument(String name) throws InstrumentWithoutNameException {
-        this.id = new InstrumentId(ObjectId.get().toString());
-        this.name = name;
-        validate();
-    }
-
-    public Instrument(InstrumentId id, String name) throws InstrumentWithoutNameException {
-        this.id = id;
-        this.name = name;
-        validate();
-    }
-
-    void validate() throws InstrumentWithoutNameException {
-        if (Objects.isNull(this.name) || this.name.isEmpty()) throw new InstrumentWithoutNameException();
+    @JsonCreator
+    @Builder
+    public Instrument(@JsonProperty("id") InstrumentId id) {
+        this.id = Objects.requireNonNull(id);
     }
 }

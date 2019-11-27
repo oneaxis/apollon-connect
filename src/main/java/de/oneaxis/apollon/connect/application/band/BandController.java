@@ -2,7 +2,6 @@ package de.oneaxis.apollon.connect.application.band;
 
 import de.oneaxis.apollon.connect.model.band.Band;
 import de.oneaxis.apollon.connect.model.band.BandId;
-import de.oneaxis.apollon.connect.model.band.BandName;
 import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +20,7 @@ class BandController {
 
     @GetMapping("new")
     Band createNewBand() {
-        BandId bandId = BandId.builder().value(ObjectId.get().toString()).build();
+        BandId bandId = new BandId(ObjectId.get().toString());
         return this.bandRepository.save(Band.builder().id(bandId).build());
     }
 
@@ -32,14 +31,14 @@ class BandController {
 
     @GetMapping("{id}")
     Band getBand(@PathVariable String id) {
-        BandId bandId = BandId.builder().value(id).build();
+        BandId bandId = new BandId(id);
         return this.bandRepository.findById(bandId).orElseThrow();
     }
 
     @PostMapping("{id}/name")
     Band updateName(@PathVariable String id, @RequestBody String name) {
-        Band band = this.bandRepository.findById(BandId.builder().value(id).build()).orElseThrow();
-        band.setName(BandName.builder().value(name).build());
+        Band band = this.bandRepository.findById(new BandId(id)).orElseThrow();
+        band.setName(name);
         return this.bandRepository.save(band);
     }
 }

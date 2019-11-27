@@ -10,7 +10,6 @@ import lombok.*;
 public class MusicianId {
     private String value;
 
-    @Builder
     @JsonCreator
     public MusicianId(@JsonProperty("value") String value) {
         this.value = value;
