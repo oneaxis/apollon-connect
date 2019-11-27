@@ -19,7 +19,6 @@ class MusicianControllerTests {
 
     @LocalServerPort
     private int randomServerPort;
-
     private ApollonConnectAPIClient apiClient;
 
     private static Musician testMusician;
