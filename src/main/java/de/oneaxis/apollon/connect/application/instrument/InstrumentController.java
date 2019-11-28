@@ -10,11 +10,11 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("instruments")
-public class InstrumentController {
+class InstrumentController {
 
     private final InstrumentRepositoryImpl instrumentRepository;
 
-    public InstrumentController(InstrumentRepositoryImpl instrumentRepository) {
+    InstrumentController(InstrumentRepositoryImpl instrumentRepository) {
         this.instrumentRepository = instrumentRepository;
     }
 
