@@ -20,7 +20,8 @@ class MusicianController {
     private final BandRepositoryImpl bandRepository;
     private final InstrumentRepositoryImpl instrumentRepository;
 
-    MusicianController(MusicianRepositoryImpl musicianRepository, BandRepositoryImpl bandRepository, InstrumentRepositoryImpl instrumentRepository) {
+    MusicianController(MusicianRepositoryImpl musicianRepository, BandRepositoryImpl bandRepository,
+                       InstrumentRepositoryImpl instrumentRepository) {
         this.musicianRepository = musicianRepository;
         this.bandRepository = bandRepository;
         this.instrumentRepository = instrumentRepository;

@@ -12,7 +12,7 @@ abstract public class AbstractControllerTest {
     protected ApollonConnectAPIClient apiClient;
 
     @BeforeEach
-    void init() {
+    void initApiClient() {
         apiClient = new ApollonConnectAPIClient(randomServerPort);
     }
 }

@@ -2,6 +2,7 @@ package de.oneaxis.apollon.connect.application.band;
 
 import de.oneaxis.apollon.connect.model.band.Band;
 import de.oneaxis.apollon.connect.model.band.BandId;
+import de.oneaxis.apollon.connect.model.band.MusicianSearch;
 import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("bands")
-class BandController {
+public class BandController {
 
     private final BandRepositoryImpl bandRepository;
 
@@ -39,6 +40,20 @@ class BandController {
     Band updateName(@PathVariable String id, @RequestBody String name) {
         Band band = this.bandRepository.findById(new BandId(id)).orElseThrow();
         band.setName(name);
+        return this.bandRepository.save(band);
+    }
+
+    @DeleteMapping("{id}/musicianSearches")
+    Band stopMusicianSearch(@PathVariable String id, @RequestBody MusicianSearch musicianSearch) {
+        Band band = this.bandRepository.findById(new BandId(id)).orElseThrow();
+        band.stopMusicianSearch(musicianSearch);
+        return this.bandRepository.save(band);
+    }
+
+    @PostMapping("{id}/musicianSearches")
+    Band startMusicianSearch(@PathVariable String id, @RequestBody MusicianSearch musicianSearch) {
+        Band band = this.bandRepository.findById(new BandId(id)).orElseThrow();
+        band.startMusicianSearch(musicianSearch);
         return this.bandRepository.save(band);
     }
 }
