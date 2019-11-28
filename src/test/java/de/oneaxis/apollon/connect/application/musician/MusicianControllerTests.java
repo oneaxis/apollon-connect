@@ -1,6 +1,5 @@
 package de.oneaxis.apollon.connect.application.musician;
 
-import de.oneaxis.apollon.connect.application.ApollonConnectAPIClient;
 import de.oneaxis.apollon.connect.application.AbstractControllerTest;
 import de.oneaxis.apollon.connect.model.band.Band;
 import de.oneaxis.apollon.connect.model.band.BandId;
@@ -8,7 +7,9 @@ import de.oneaxis.apollon.connect.model.instrument.Instrument;
 import de.oneaxis.apollon.connect.model.instrument.InstrumentId;
 import de.oneaxis.apollon.connect.model.musician.BandSearch;
 import de.oneaxis.apollon.connect.model.musician.Musician;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
