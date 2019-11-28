@@ -1,6 +1,7 @@
 package de.oneaxis.apollon.connect.application.musician;
 
 import de.oneaxis.apollon.connect.application.ApollonConnectAPIClient;
+import de.oneaxis.apollon.connect.application.AbstractControllerTest;
 import de.oneaxis.apollon.connect.model.band.Band;
 import de.oneaxis.apollon.connect.model.band.BandId;
 import de.oneaxis.apollon.connect.model.instrument.Instrument;
@@ -8,19 +9,11 @@ import de.oneaxis.apollon.connect.model.instrument.InstrumentId;
 import de.oneaxis.apollon.connect.model.musician.BandSearch;
 import de.oneaxis.apollon.connect.model.musician.Musician;
 import org.junit.jupiter.api.*;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
-class MusicianControllerTests {
-
-
-    @LocalServerPort
-    private int randomServerPort;
-    private ApollonConnectAPIClient apiClient;
+class MusicianControllerTests extends AbstractControllerTest {
 
     private static Musician testMusician;
 
@@ -82,5 +75,4 @@ class MusicianControllerTests {
         testMusician = this.apiClient.getMusician(testMusician.getId());
         assertThat(testMusician.getBandSearches()).doesNotContain(bandSearch);
     }
-
 }

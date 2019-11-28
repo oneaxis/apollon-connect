@@ -31,6 +31,14 @@ public class ApollonConnectAPIClient extends TestRestTemplate {
         return this.getForObject(route(MUSICIANS_ENDPOINT, NEW_OBJECT_ENDPOINT), Musician.class);
     }
 
+    public Band getNewBand() {
+        return this.getForObject(route(BANDS_ENDPOINT, NEW_OBJECT_ENDPOINT), Band.class);
+    }
+
+    public Instrument getNewInstrument() {
+        return this.getForObject(route(INSTRUMENTS_ENDPOINT, NEW_OBJECT_ENDPOINT), Instrument.class);
+    }
+
     public Musician getMusician(MusicianId musicianId) {
         return this.getForObject(route(MUSICIANS_ENDPOINT, musicianId.getValue()), Musician.class);
     }
@@ -65,14 +73,6 @@ public class ApollonConnectAPIClient extends TestRestTemplate {
         RequestEntity<BandSearch> requestEntity = new RequestEntity(bandSearch, HttpMethod.DELETE,
                 URI.create(route(MUSICIANS_ENDPOINT, musicianId.getValue(), BANDSEARCHES_ENDPOINT)));
         return this.exchange(requestEntity, Musician.class).getBody();
-    }
-
-    public Band getNewBand() {
-        return this.getForObject(route(BANDS_ENDPOINT, NEW_OBJECT_ENDPOINT), Band.class);
-    }
-
-    public Instrument getNewInstrument() {
-        return this.getForObject(route(INSTRUMENTS_ENDPOINT, NEW_OBJECT_ENDPOINT), Instrument.class);
     }
 
     private String route(String... urlSegments) {
