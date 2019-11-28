@@ -17,11 +17,6 @@ class MusicianControllerTests extends AbstractControllerTest {
 
     private static Musician testMusician;
 
-    @BeforeEach
-    void init() {
-        apiClient = new ApollonConnectAPIClient(randomServerPort);
-    }
-
     @Test
     void Test0_ShouldCreateNewMusician() {
         testMusician = this.apiClient.getNewMusician();
