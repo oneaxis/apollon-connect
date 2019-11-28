@@ -1,7 +1,6 @@
-# apollon-connect
+# Apollon Connect
 
-## Conceptual ides
-### I'm a musician and I want to...
+## Vision
 
 > find a band
 
@@ -12,5 +11,3 @@
 > add the `role` to my search I would like to represent in a band context
 
 > show up the bands I'm already playing in
-
-> 
