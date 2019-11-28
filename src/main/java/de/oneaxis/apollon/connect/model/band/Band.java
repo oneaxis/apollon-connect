@@ -22,4 +22,12 @@ public class Band {
     public Band(@JsonProperty("id") BandId id) {
         this.id = Objects.requireNonNull(id);
     }
+
+    public void startMusicianSearch(MusicianSearch musicianSearch) {
+        this.musicianSearches.add(Objects.requireNonNull(musicianSearch));
+    }
+
+    public void stopMusicianSearch(MusicianSearch musicianSearch) {
+        this.musicianSearches.remove(Objects.requireNonNull(musicianSearch));
+    }
 }
