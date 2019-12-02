@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import static de.oneaxis.apollon.connect.application.RestEndpoints.*;
+
 @RestController
-@RequestMapping("bands")
+@RequestMapping(BANDS)
 public class BandController {
 
     private final BandRepositoryImpl bandRepository;
@@ -19,7 +21,7 @@ public class BandController {
         this.bandRepository = bandRepository;
     }
 
-    @GetMapping("new")
+    @GetMapping(NEW)
     Band createNewBand() {
         BandId bandId = new BandId(ObjectId.get().toString());
         return this.bandRepository.save(Band.builder().id(bandId).build());
@@ -36,21 +38,21 @@ public class BandController {
         return this.bandRepository.findById(bandId).orElseThrow();
     }
 
-    @PostMapping("{id}/name")
+    @PostMapping("{id}/" + NEW)
     Band updateName(@PathVariable String id, @RequestBody String name) {
         Band band = this.bandRepository.findById(new BandId(id)).orElseThrow();
         band.setName(name);
         return this.bandRepository.save(band);
     }
 
-    @DeleteMapping("{id}/musicianSearches")
+    @DeleteMapping("{id}/" + MUSICIAN_SEARCHES)
     Band stopMusicianSearch(@PathVariable String id, @RequestBody MusicianSearch musicianSearch) {
         Band band = this.bandRepository.findById(new BandId(id)).orElseThrow();
         band.stopMusicianSearch(musicianSearch);
         return this.bandRepository.save(band);
     }
 
-    @PostMapping("{id}/musicianSearches")
+    @PostMapping("{id}/" + MUSICIAN_SEARCHES)
     Band startMusicianSearch(@PathVariable String id, @RequestBody MusicianSearch musicianSearch) {
         Band band = this.bandRepository.findById(new BandId(id)).orElseThrow();
         band.startMusicianSearch(musicianSearch);

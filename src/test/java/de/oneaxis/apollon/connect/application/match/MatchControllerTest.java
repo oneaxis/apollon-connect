@@ -1,4 +1,4 @@
-package de.oneaxis.apollon.connect.application.matches;
+package de.oneaxis.apollon.connect.application.match;
 
 import de.oneaxis.apollon.connect.application.AbstractControllerTest;
 import de.oneaxis.apollon.connect.model.band.Band;
@@ -16,7 +16,7 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @TestMethodOrder(MethodOrderer.Alphanumeric.class)
-class MatchesControllerTest extends AbstractControllerTest {
+class MatchControllerTest extends AbstractControllerTest {
 
     private Band bandSearchingForKeyboardPlayer, bandSearchingForGuitarPlayer;
     private Musician guitarMusician, keyboardMusician, allroundMusician;

@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import static de.oneaxis.apollon.connect.application.RestEndpoints.*;
+
 @RestController
-@RequestMapping("instruments")
+@RequestMapping(INSTRUMENTS)
 class InstrumentController {
 
     private final InstrumentRepositoryImpl instrumentRepository;
@@ -18,7 +20,7 @@ class InstrumentController {
         this.instrumentRepository = instrumentRepository;
     }
 
-    @GetMapping("new")
+    @GetMapping(NEW)
     Instrument createNewInstrument() {
         InstrumentId instrumentId = new InstrumentId(ObjectId.get().toString());
         return this.instrumentRepository.save(Instrument.builder().id(instrumentId).build());
@@ -35,7 +37,7 @@ class InstrumentController {
         return this.instrumentRepository.findById(instrumentId).orElseThrow();
     }
 
-    @PostMapping("{id}/name")
+    @PostMapping("{id}/" + NAME)
     Instrument updateInstrumentName(@PathVariable String id, @RequestBody String name) {
         Instrument instrument = this.instrumentRepository.findById(new InstrumentId(id)).orElseThrow();
         instrument.setName(name);

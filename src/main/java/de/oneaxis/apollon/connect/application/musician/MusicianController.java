@@ -12,8 +12,10 @@ import de.oneaxis.apollon.connect.model.musician.MusicianId;
 import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.*;
 
+import static de.oneaxis.apollon.connect.application.RestEndpoints.*;
+
 @RestController
-@RequestMapping("musicians")
+@RequestMapping(MUSICIANS)
 class MusicianController {
 
     private final MusicianRepositoryImpl musicianRepository;
@@ -27,7 +29,7 @@ class MusicianController {
         this.instrumentRepository = instrumentRepository;
     }
 
-    @GetMapping("new")
+    @GetMapping(NEW)
     Musician createNewMusician() {
         MusicianId musicianId = new MusicianId(ObjectId.get().toString());
         return this.musicianRepository.save(Musician.builder().id(musicianId).build());
@@ -39,7 +41,7 @@ class MusicianController {
         return this.musicianRepository.findById(musicianId).orElseThrow();
     }
 
-    @DeleteMapping("{id}/bands/{bandId}")
+    @DeleteMapping("{id}/" + BANDS + "/{bandId}")
     Musician leaveBand(@PathVariable String id, @PathVariable String bandId) {
         Musician musician = this.musicianRepository.findById(new MusicianId(id)).orElseThrow();
         Band band = this.bandRepository.findById(new BandId(bandId)).orElseThrow();
@@ -48,7 +50,7 @@ class MusicianController {
         return this.musicianRepository.save(musician);
     }
 
-    @PostMapping("{id}/bands")
+    @PostMapping("{id}/" + BANDS)
     Musician joinBand(@PathVariable String id, @RequestBody String bandId) {
         Musician musician = this.musicianRepository.findById(new MusicianId(id)).orElseThrow();
         Band band = this.bandRepository.findById(new BandId(bandId)).orElseThrow();
@@ -57,7 +59,7 @@ class MusicianController {
         return this.musicianRepository.save(musician);
     }
 
-    @DeleteMapping("{id}/instruments/{instrumentId}")
+    @DeleteMapping("{id}/" + INSTRUMENTS + "/{instrumentId}")
     Musician unassignInstrument(@PathVariable String id, @PathVariable String instrumentId) {
         Musician musician = this.musicianRepository.findById(new MusicianId(id)).orElseThrow();
         Instrument instrument = this.instrumentRepository.findById(new InstrumentId(instrumentId)).orElseThrow();
@@ -66,7 +68,7 @@ class MusicianController {
         return this.musicianRepository.save(musician);
     }
 
-    @PostMapping("{id}/instruments")
+    @PostMapping("{id}/" + INSTRUMENTS)
     Musician assignInstrument(@PathVariable String id, @RequestBody String instrumentId) {
         Musician musician = this.musicianRepository.findById(new MusicianId(id)).orElseThrow();
         Instrument instrument = this.instrumentRepository.findById(new InstrumentId(instrumentId)).orElseThrow();
@@ -75,14 +77,14 @@ class MusicianController {
         return this.musicianRepository.save(musician);
     }
 
-    @DeleteMapping("{id}/bandSearches")
+    @DeleteMapping("{id}/" + BAND_SEARCHES)
     Musician stopBandSearch(@PathVariable String id, @RequestBody BandSearch bandSearch) {
         Musician musician = this.musicianRepository.findById(new MusicianId(id)).orElseThrow();
         musician.stopBandSearch(bandSearch);
         return this.musicianRepository.save(musician);
     }
 
-    @PostMapping("{id}/bandSearches")
+    @PostMapping("{id}/" + BAND_SEARCHES)
     Musician startBandSearch(@PathVariable String id, @RequestBody BandSearch bandSearch) {
         Musician musician = this.musicianRepository.findById(new MusicianId(id)).orElseThrow();
         musician.startBandSearch(bandSearch);
